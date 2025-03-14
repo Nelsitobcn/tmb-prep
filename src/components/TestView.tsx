@@ -1,92 +1,168 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useStore } from '../store';
 import { infoGeneral } from '../data/tests';
 import MarkdownIt from 'markdown-it';
 
-// Inicializar markdown-it con opciones
 const md = new MarkdownIt({
-  html: true,
-  //breaks: true,   <-- Quita esto. No es necesario.
-  linkify: true,
+    html: true,
+    linkify: true,
 });
 
 interface TestWithQuestions {
-  id: number;
-  title: string;
-  description: string;
-  content: any;
-  questions: any[];
+    id: number | string;
+    title: string;
+    description: string;
+    content: any;
+    questions?: any[];
 }
 
 export const TestView: React.FC = () => {
-  const { currentTestId, addAnswer, completeTest, setCurrentTest, tests } = useStore();
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [showExplanation, setShowExplanation] = useState(false);
-  const [htmlContent, setHtmlContent] = useState<string>('');
+    const { setCurrentTest, tests } = useStore();
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+    const [showExplanation, setShowExplanation] = useState(false);
+    const [htmlContent, setHtmlContent] = useState<string>('');
 
-  const currentTest = [...tests, ...infoGeneral].find((t) => t.id === currentTestId);
+    const testId = new URLSearchParams(window.location.search).get('testId');
 
-  if (!currentTest) return null;
+    const currentTest: TestWithQuestions | undefined = testId
+        ? [...tests, ...infoGeneral].find((t) => String(t.id) === testId)
+        : undefined;
 
-  //Ya no necesitas la función extractText.
-  // function extractText(obj: any): string {
-  //   if (typeof obj === 'string') return obj;
+    useEffect(() => {
+        if (testId) {
+            setCurrentTest(testId);
+        }
+    }, [testId, setCurrentTest]);
 
-  //   if (Array.isArray(obj)) {
-  //     return obj.map(item => extractText(item)).filter(item => item !== '').join('\n');
-  //   }
+    useEffect(() => {
+        if (!currentTest || currentTest.questions) {
+            setHtmlContent('');
+            return;
+        }
 
-  //   if (typeof obj === 'object' && obj !== null) {
-  //     if ('heading' in obj && 'items' in obj) {
-  //       const heading = `## ${obj.heading}`;
-  //       const items = Array.isArray(obj.items)
-  //         ? obj.items.map((item: any) => `* ${extractText(item)}`).join('\n')
-  //         : '';
-  //       return `${heading}\n${items}`;
-  //     }
-  //     return Object.values(obj).map(value => extractText(value)).filter(value => value !== '').join('\n');
-  //   }
-  //   return '';
-  // }
+        const content = extractText(currentTest.content);
+        setHtmlContent(md.render(content));
+    }, [currentTest]);
 
-  useEffect(() => {
-    const processMarkdown = (markdownText: string) => {
-      try {
-        const processedHtml = md.render(markdownText);
-        if (typeof processedHtml !== 'string') throw new Error('markdown-it did not return a string');
-        return processedHtml;
-      } catch (error) {
-        console.error('Error al procesar el Markdown con markdown-it:', error);
-        return markdownText;
-      }
+    if (!currentTest) {
+        return (
+            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+                <p>Test no encontrado. Por favor, selecciona un test de la lista.</p>
+            </div>
+        );
+    }
+
+    function extractText(obj: any): string {
+        if (typeof obj === 'string') return obj;
+        if (Array.isArray(obj)) return obj.map(extractText).join('');
+        if (typeof obj === 'object' && obj !== null) {
+            let result = '';
+            if (obj.heading) result += `## ${obj.heading}\n\n`;
+            if (obj.items) {
+                result += obj.items.map((item: string) => item.trim().replace(/^-/g, '*')).join('\n');
+            }
+            Object.keys(obj).forEach((key) => {
+                if (!['heading', 'items'].includes(key)) result += extractText(obj[key]);
+            });
+            return result;
+        }
+        return '';
+    }
+
+    const currentQuestion = currentTest.questions?.[currentQuestionIndex];
+
+    const handleAnswerClick = (answerId: number) => {
+        setSelectedAnswer(answerId);
+        setShowExplanation(true);
     };
 
-    // Accedemos directamente a currentTest.content, que ahora es un string
-    const content = currentTest.content;
-		const tempHtmlContent = processMarkdown(content);
+    const goToNextQuestion = () => {
+        if (currentTest.questions && currentQuestionIndex < currentTest.questions.length - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setSelectedAnswer(null);
+            setShowExplanation(false);
+        } else {
+            setCurrentTest(null);
+            window.history.replaceState({}, document.title, '/');
+        }
+    };
 
-    // Mantén estos console.log para verificar (opcional, puedes quitarlos después):
-    console.log("Contenido original:", currentTest.content);
-    console.log("Texto extraído:", content);
-    console.log("HTML generado:", tempHtmlContent);
+    const goToPreviousQuestion = () => {
+        if (currentQuestionIndex > 0) {
+            setCurrentQuestionIndex(currentQuestionIndex - 1);
+            setSelectedAnswer(null);
+            setShowExplanation(false);
+        }
+    };
 
-    setHtmlContent(tempHtmlContent);
-
-  }, [currentTestId, currentTest?.content]);
-
-
-  return (
-    <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
-      <div className="flex items-center justify-between mb-6">
-        <button onClick={() => setCurrentTest(null)} className="flex items-center text-gray-600 hover:text-gray-800">
-          <ArrowLeft className="w-5 h-5 mr-2" /> Volver a la lista
-        </button>
-      </div>
-      <h2 className="text-xl font-semibold mb-4">{currentTest.title}</h2>
-      <p className="text-gray-600 mb-4">{currentTest.description}</p>
-      <div className="max-w-none text-gray-700 bg-white p-4 rounded-lg" dangerouslySetInnerHTML={{ __html: htmlContent }} />
-    </div>
-  );
+    return currentTest.questions ? (
+        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <button
+                onClick={() => {
+                    window.history.replaceState({}, document.title, '/');
+                    setCurrentTest(null);
+                }}
+                className="flex items-center text-gray-600 hover:text-gray-800 mb-4"
+            >
+                <ArrowLeft className="w-5 h-5 mr-2" /> Volver a la lista
+            </button>
+            <h2 className="text-xl font-semibold mb-4">{currentTest.title}</h2>
+            <p className="text-gray-600 mb-4">{currentTest.description}</p>
+            {currentQuestion && (
+                <>
+                    <h3 className="text-lg font-medium mb-2">{currentQuestion.text}</h3>
+                    <div className="space-y-2">
+                        {currentQuestion.options.map((option, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handleAnswerClick(index)}
+                                className={`block w-full text-left p-2 rounded-md border-2 ${
+                                    selectedAnswer === index
+                                        ? currentQuestion.correctAnswer === index
+                                            ? 'bg-green-100 border-green-500'
+                                            : 'bg-red-100 border-red-500'
+                                        : 'hover:bg-gray-100'
+                                }`}
+                                disabled={showExplanation}
+                            >
+                                {option}
+                            </button>
+                        ))}
+                    </div>
+                    {showExplanation && (
+                        <p className="mt-4 p-2 bg-gray-100 rounded-md">
+                            {currentQuestion.explanation}
+                        </p>
+                    )}
+                    <div className="flex justify-between mt-4">
+                        <button onClick={goToPreviousQuestion} disabled={currentQuestionIndex === 0} className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:opacity-50">
+                            Anterior
+                        </button>
+                        <button onClick={goToNextQuestion} className="px-4 py-2 bg-blue-500 text-white rounded-md">
+                            {currentQuestionIndex === currentTest.questions.length - 1 ? 'Finalizar' : 'Siguiente'}
+                        </button>
+                    </div>
+                </>
+            )}
+        </div>
+    ) : (
+        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <button
+                onClick={() => {
+                    window.history.replaceState({}, document.title, '/');
+                    setCurrentTest(null);
+                }}
+                className="flex items-center text-gray-600 hover:text-gray-800 mb-4"
+            >
+                <ArrowLeft className="w-5 h-5 mr-2" /> Volver a la lista
+            </button>
+            <h2 className="text-xl font-semibold mb-4">{currentTest.title}</h2>
+            <p className="text-gray-600 mb-4">{currentTest.description}</p>
+            <div className="prose max-w-none text-gray-700" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+        </div>
+    );
 };
+
+export default TestView;

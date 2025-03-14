@@ -1,49 +1,39 @@
 import React from 'react';
-import { ClipboardList, CheckCircle } from 'lucide-react';
 import { useStore } from '../store';
-import { infoGeneral } from '../data/tests'; // 🔹 Importar infoGeneral
+import { infoGeneral } from '../data/tests';
 
 export const TestList: React.FC = () => {
-  const { progress, setCurrentTest, tests } = useStore();
+  const { setCurrentTest, tests } = useStore();
 
-  // 🔹 Fusionar tests con infoGeneral
   const allTests = [...tests, ...infoGeneral];
 
-  return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {allTests.map((test) => {
-        const testProgress = progress.find((p) => p.testId === test.id);
-        const completed = testProgress?.completed;
-        const score = testProgress?.score || 0;
+  const handleTestClick = (testId: number | string) => {
+    setCurrentTest(testId);
+    window.history.pushState({}, '', `/?testId=${testId}`);
+    window.dispatchEvent(new Event('popstate'));
+  };
 
-        return (
-          <div
-            key={test.id}
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer"
-            onClick={() => setCurrentTest(test.id)}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <ClipboardList className="w-6 h-6 text-blue-600" />
-              {completed && <CheckCircle className="w-6 h-6 text-green-500" />}
-            </div>
-            <h3 className="text-xl font-semibold mb-2">{test.title}</h3>
-            <p className="text-gray-600 mb-4">{test.description}</p>
-            <div className="flex items-center justify-between text-sm">
-              {/* 🔹 Manejo especial para infoGeneral (no tiene preguntas) */}
-              {test.questions ? (
-                <span className="text-gray-500">{test.questions.length} preguntas</span>
-              ) : (
-                <span className="text-gray-500">Información General</span>
-              )}
-              {completed && (
-                <span className="text-green-600 font-semibold">
-                  Puntuación: {score}%
-                </span>
-              )}
-            </div>
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      <h2 className="text-2xl font-bold mb-4">Lista de Tests</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {allTests.map((test) => (
+          <div key={test.id} className="border rounded-lg shadow-sm hover:shadow-lg transition-shadow bg-white">
+            <button
+              onClick={() => handleTestClick(test.id)}
+              className="text-left w-full p-4"
+            >
+              <h3 className="text-lg font-semibold">{test.title}</h3>
+              <p className="text-gray-600">{test.description}</p>
+              <p className="text-sm text-gray-400">
+                {test.questions ? `${test.questions.length} preguntas` : '📄 Información general'}
+              </p>
+            </button>
           </div>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 };
+
+export default TestList;
