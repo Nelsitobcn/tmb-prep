@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba de Firebase Auth</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .container {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    .log {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>Prueba de Firebase Auth</h1>
+  
+  <div class="container">
+    <h2>Configuración de Firebase</h2>
+    <div id="config-log" class="log"></div>
+    
+    <h2>Prueba de Autenticación Anónima</h2>
+    <button id="test-auth">Probar Autenticación Anónima</button>
+    <div id="auth-log" class="log"></div>
+  </div>
+
+  <script type="module">
+    // Importar Firebase
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js';
+    import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js';
+
+    // Función para agregar logs
+    function log(elementId, message, isError = false) {
+      const logElement = document.getElementById(elementId);
+      const logEntry = document.createElement('div');
+      logEntry.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+      logEntry.className = isError ? 'error' : '';
+      logElement.appendChild(logEntry);
+      console.log(message);
+    }
+
+    // Configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDz84UMxLbHpMfl6aiiEraezX72n_DU97o",
+      authDomain: "preparacion-para-mando-tmb.firebaseapp.com",
+      projectId: "preparacion-para-mando-tmb",
+      storageBucket: "preparacion-para-mando-tmb.appspot.com",
+      messagingSenderId: "476623349798",
+      appId: "1:476623349798:web:802ba45e57bd13f90d5ee7"
+    };
+
+    try {
+      // Inicializar Firebase
+      log('config-log', 'Inicializando Firebase...');
+      const app = initializeApp(firebaseConfig);
+      log('config-log', 'Firebase inicializado correctamente');
+      
+      // Inicializar Auth
+      log('config-log', 'Inicializando Auth...');
+      const auth = getAuth(app);
+      log('config-log', 'Auth inicializado correctamente');
+      
+      // Configurar botón de prueba
+      document.getElementById('test-auth').addEventListener('click', async () => {
+        try {
+          log('auth-log', 'Intentando autenticación anónima...');
+          const userCredential = await signInAnonymously(auth);
+          log('auth-log', `Autenticación anónima exitosa: ${userCredential.user.uid}`, false);
+          log('auth-log', 'Usuario: ' + JSON.stringify(userCredential.user, null, 2), false);
+        } catch (error) {
+          log('auth-log', `Error de autenticación: ${error.code} - ${error.message}`, true);
+          log('auth-log', 'Error completo: ' + JSON.stringify(error, null, 2), true);
+        }
+      });
+    } catch (error) {
+      log('config-log', `Error al inicializar Firebase: ${error.message}`, true);
+      console.error('Error completo:', error);
+    }
+  </script>
+</body>
+</html>

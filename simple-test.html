@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba Simple</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prueba Simple</h1>
+    
+    <div class="card">
+        <h2>Prueba de Autenticación de Firebase</h2>
+        <div id="auth-status">Verificando estado de autenticación...</div>
+        <div id="auth-buttons">
+            <button id="login-email">Iniciar sesión con email/contraseña</button>
+            <button id="logout" style="display:none;">Cerrar sesión</button>
+        </div>
+        <div id="auth-error" style="color: red;"></div>
+    </div>
+    
+    <div class="card">
+        <h2>Datos de Tests</h2>
+        <div id="tests-data">Cargando datos de tests...</div>
+    </div>
+
+    <script type="module">
+        // Importar Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDz84UMxLbHpMfl6aiiEraezX72n_DU97o",
+            authDomain: "preparacion-para-mando-tmb.firebaseapp.com",
+            projectId: "preparacion-para-mando-tmb",
+            storageBucket: "preparacion-para-mando-tmb.appspot.com",
+            messagingSenderId: "476623349798",
+            appId: "1:476623349798:web:802ba45e57bd13f90d5ee7"
+        };
+
+        // Inicializar Firebase
+        console.log('Inicializando Firebase...');
+        const app = initializeApp(firebaseConfig);
+        console.log('Firebase inicializado correctamente');
+        
+        // Inicializar Auth
+        console.log('Inicializando Auth...');
+        const auth = getAuth(app);
+        console.log('Auth inicializado correctamente');
+        
+        // Monitorear estado de autenticación
+        onAuthStateChanged(auth, function(user) {
+            if (user) {
+                document.getElementById('auth-status').innerHTML = `
+                    <p>Usuario autenticado:</p>
+                    <pre>${JSON.stringify(user, null, 2)}</pre>
+                `;
+                document.getElementById('login-email').style.display = 'none';
+                document.getElementById('logout').style.display = 'inline-block';
+                
+                // Cargar datos de tests
+                loadTestsData();
+            } else {
+                document.getElementById('auth-status').innerHTML = '<p>No hay usuario autenticado</p>';
+                document.getElementById('login-email').style.display = 'inline-block';
+                document.getElementById('logout').style.display = 'none';
+                
+                // Mostrar datos de tests de ejemplo
+                loadMockTestsData();
+            }
+        });
+        
+        // Botón de inicio de sesión con email/contraseña
+        document.getElementById('login-email').addEventListener('click', function() {
+            document.getElementById('auth-error').textContent = '';
+            const email = prompt('Introduce tu email:');
+            const password = prompt('Introduce tu contraseña:');
+            
+            if (email && password) {
+                signInWithEmailAndPassword(auth, email, password)
+                    .then(function(userCredential) {
+                        console.log('Usuario autenticado:', userCredential.user);
+                    })
+                    .catch(function(error) {
+                        document.getElementById('auth-error').textContent = `Error: ${error.code} - ${error.message}`;
+                        console.error('Error de autenticación con email:', error);
+                    });
+            }
+        });
+        
+        // Botón de cierre de sesión
+        document.getElementById('logout').addEventListener('click', function() {
+            signOut(auth)
+                .then(function() {
+                    console.log('Sesión cerrada');
+                })
+                .catch(function(error) {
+                    console.error('Error al cerrar sesión:', error);
+                });
+        });
+        
+        // Función para cargar datos de tests (simulados)
+        function loadMockTestsData() {
+            const mockTests = [
+                { id: 1, title: "Historia y Evolución de TMB", questions: [/* ... */] },
+                { id: 2, title: "Estructura Organizativa de TMB", questions: [/* ... */] },
+                { id: 3, title: "Valores y Código Ético de TMB", questions: [/* ... */] }
+            ];
+            
+            document.getElementById('tests-data').innerHTML = `
+                <p>Datos de tests (simulados):</p>
+                <pre>${JSON.stringify(mockTests, null, 2)}</pre>
+            `;
+        }
+        
+        // Función para cargar datos de tests reales
+        function loadTestsData() {
+            // En una aplicación real, aquí cargaríamos los datos desde Firestore
+            // Por ahora, usamos los mismos datos simulados
+            loadMockTestsData();
+        }
+    </script>
+</body>
+</html>

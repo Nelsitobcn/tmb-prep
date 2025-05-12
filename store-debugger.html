@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depurador del Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Depurador del Store</h1>
+    
+    <div class="card">
+        <h2>Datos del Store</h2>
+        <div id="store-data"></div>
+    </div>
+
+    <script>
+        // Cargar datos del localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Intentar obtener los datos del store desde localStorage
+                const storeData = localStorage.getItem('tmb-prep-store');
+                
+                if (storeData) {
+                    const parsedData = JSON.parse(storeData);
+                    
+                    document.getElementById('store-data').innerHTML = `
+                        <h3>Datos encontrados en localStorage:</h3>
+                        <pre>${JSON.stringify(parsedData, null, 2)}</pre>
+                        
+                        <h3>Resumen:</h3>
+                        <ul>
+                            <li>Tests: ${parsedData.state.tests ? parsedData.state.tests.length : 0} tests</li>
+                            <li>Test IDs: ${parsedData.state.tests ? JSON.stringify(parsedData.state.tests.map(t => t.id)) : '[]'}</li>
+                            <li>Current Test ID: ${parsedData.state.currentTestId || 'null'}</li>
+                            <li>Progress: ${parsedData.state.progress ? parsedData.state.progress.length : 0} registros</li>
+                        </ul>
+                    `;
+                } else {
+                    document.getElementById('store-data').innerHTML = `
+                        <p>No se encontraron datos del store en localStorage.</p>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('store-data').innerHTML = `
+                    <p>Error al cargar los datos del store:</p>
+                    <pre>${error.toString()}</pre>
+                `;
+                console.error('Error al cargar los datos del store:', error);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,11 +1,16 @@
 import React from 'react';
 import { useStore } from '../store';
-import { infoGeneral } from '../data/tests';
+import { tests as initialTests, infoGeneral } from '../data/tests';
 
 export const TestList: React.FC = () => {
-  const { setCurrentTest, tests } = useStore();
+  const { setCurrentTest } = useStore();
 
-  const allTests = [...tests, ...infoGeneral];
+  // Mostrar los tests directamente desde el archivo de datos
+  console.log("Tests disponibles:", initialTests.length);
+  console.log("Info general:", infoGeneral.length);
+  
+  // Crear una copia local de los tests para mostrarlos
+  const allTests = [...initialTests, ...infoGeneral];
 
   const handleTestClick = (testId: number | string) => {
     setCurrentTest(testId);
@@ -26,7 +31,7 @@ export const TestList: React.FC = () => {
               <h3 className="text-lg font-semibold">{test.title}</h3>
               <p className="text-gray-600">{test.description}</p>
               <p className="text-sm text-gray-400">
-                {test.questions ? `${test.questions.length} preguntas` : '📄 Información general'}
+                {'questions' in test && test.questions ? `${test.questions.length} preguntas` : '📄 Información general'}
               </p>
             </button>
           </div>

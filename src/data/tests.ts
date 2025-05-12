@@ -1,3 +1,5 @@
+import { Test } from '../types';
+
 export const tests: Test[] = [
   {
     id: 1,
@@ -123,6 +125,126 @@ export const tests: Test[] = [
         ],
         correctAnswer: 0,
         explanation: "El SAE permite un control minucioso del funcionamiento de la red de transporte."
+      },
+      {
+        id: 21,
+        text: "¿Cuál es el objetivo principal del Pla Director d'Accessibilitat Universal de TMB, como hito en su evolución hacia la inclusión?",
+        options: [
+          "Reducir los costos de mantenimiento de las infraestructuras antiguas",
+          "Expandir la red de metro a nuevas zonas con mayor densidad de población",
+          "Alcanzar el objetivo último de la accesibilidad universal en todos sus servicios y espacios",
+          "Crear un sistema de tarifas especiales para personas con discapacidad"
+        ],
+        correctAnswer: 2,
+        explanation: "El Pla Director d'Accessibilitat Universal tiene como objetivo principal conseguir el objetivo último de la accesibilidad universal en Transports Metropolitans de Barcelona (TMB) [1]."
+      },
+      {
+        id: 22,
+        text: "Según el Pla Director d'Accessibilitat Universal, además de definir principios internos y la estructura de gestión, ¿qué otro aspecto clave se consolida para avanzar en accesibilidad?",
+        options: [
+          "La adquisición masiva de nuevos vehículos accesibles",
+          "El marco de comunicación y diálogo con las entidades, las administraciones y otros operadores de transporte",
+          "La eliminación de todas las barreras arquitectónicas en un plazo de 5 años",
+          "La creación de una unidad de negocio específica para servicios de accesibilidad"
+        ],
+        correctAnswer: 1,
+        explanation: "Para avanzar hacia la accesibilidad universal, el plan consolida el marco de comunicación y diálogo con las entidades, las administraciones y los otros operadores de transporte [1]."
+      },
+      {
+        id: 23,
+        text: "El Pla Estratègic de TMB se elabora teniendo en cuenta diversos análisis para guiar su evolución futura. ¿Qué tipo de análisis externo se menciona específicamente?",
+        options: [
+          "Análisis de la competencia de transporte privado",
+          "Análisis del entorno en el ámbito de la movilidad y la evolución de la demanda, además de tendencias futuras",
+          "Análisis de la calidad del aire en la ciudad",
+          "Análisis de la situación económica internacional"
+        ],
+        correctAnswer: 1,
+        explanation: "El modelo conceptual del Pla Estratègic incluye el análisis del entorno en el ámbito de la movilidad y la evolución de la demanda, además de tendencias futuras [2]."
+      },
+      {
+        id: 24,
+        text: "¿Qué enfoque utiliza TMB en las reuniones internas de reflexión para obtener información valiosa para el análisis organizativo y valorar su escenario actual?",
+        options: [
+          "Consultoría externa únicamente",
+          "Estudios de mercado globales",
+          "La incorporación de miembros clave de la organización para extraer información de alto valor y valorar el escenario actual (DAFO)",
+          "Sondeos de opinión entre los usuarios del servicio"
+        ],
+        correctAnswer: 2,
+        explanation: "En reuniones internas de reflexión, con la incorporación de miembros clave de la organización, se ha extraído información de alto valor para el análisis organizativo y se ha valorado el escenario actual (debilidades, amenazas, fortalezas y oportunidades) [2]."
+      },
+      {
+        id: 25,
+        text: "Como parte de la evolución en la definición de su servicio y compromisos de calidad, ¿en qué documento se muestran estos compromisos adquiridos por TMB?",
+        options: [
+          "El Convenio Colectivo",
+          "La Memoria Económica Anual",
+          "La Carta de Serveis",
+          "El Plan de Medidas Antifraude"
+        ],
+        correctAnswer: 2,
+        explanation: "La carta de serveis es el documento donde se muestran los compromisos adquiridos en los ámbitos de eficacia, calidad, sostenibilidad y prestación de servicios [3, 4]."
+      },
+      {
+        id: 26,
+        text: "La Carta de Serveis de TMB estructura los compromisos de calidad en diversas 'familias' de atributos. ¿Qué incluye esta estructura?",
+        options: [
+          "Tarifas y descuentos, Tipos de abonos, Puntos de venta",
+          "Selección de personal, Evaluación del desempeño, Beneficios sociales",
+          "Mantenimiento de vehículos, Consumo de combustible, Reciclaje de materiales",
+          "Servei ofert, Puntualitat i regularitat, Accessibilitat, Atenció al client, Información, Confort i seguretat, y Respecte pel medi ambient y contribución al desarrollo sostenible"
+        ],
+        correctAnswer: 3,
+        explanation: "Las Cartas de servei estructuran los mecanismos de participación y compromisos de calidad de acuerdo con estas familias de atributos [3, 4]."
+      },
+      {
+        id: 27,
+        text: "Para garantizar la seguridad tecnológica y de la información, TMB ha desarrollado un conjunto de políticas. ¿Qué directrices establece el Cuerpo Normativo de Seguridad?",
+        options: [
+          "Únicamente directrices sobre el uso de software legal",
+          "Directrices para la gestión de la seguridad tecnológica y de la información a través de un conjunto de políticas de seguridad",
+          "Directrices para la gestión de la seguridad física en las estaciones de metro",
+          "Directrices sobre la contratación de personal de seguridad"
+        ],
+        correctAnswer: 1,
+        explanation: "El Cuerpo Normativo de Seguridad establece las directrices para la gestión de la seguridad tecnológica y de la información a través de un conjunto de políticas de seguridad [5]."
+      },
+      {
+        id: 28,
+        text: "En el ámbito de la seguridad tecnológica y de la información, ¿quiénes deben recibir formación y disponer de información apropiada según el objetivo del Cuerpo Normativo de Seguridad Tecnológica y de la Información?",
+        options: [
+          "Solo el personal del departamento de IT",
+          "Únicamente la dirección de la empresa",
+          "Todos los empleados de TMB, contratistas, usuarios de terceras partes y aquellos usuarios que TMB considere",
+          "Únicamente el personal operativo de autobuses y metro"
+        ],
+        correctAnswer: 2,
+        explanation: "El objetivo del documento es que todos los empleados de Transports Metropolitans de Barcelona, contratistas y usuarios de terceras partes y, en última instancia, aquellos usuarios que TMB considere, reciban la formación y tengan a su disposición la información apropiada en el ámbito de la seguridad [6]."
+      },
+      {
+        id: 29,
+        text: "Como parte de la evolución en sus procedimientos y en cumplimiento normativo (RGPD), ¿qué acción ha documentado TMB para gestionar adecuadamente los incidentes de seguridad que afecten a datos personales?",
+        options: [
+          "Un procedimiento para el registro, gestión y notificación de brechas de seguridad en datos de carácter personal",
+          "La eliminación mensual de todas las bases de datos que contengan información personal",
+          "La contratación de personal de seguridad física adicional",
+          "La prohibición total del uso de dispositivos móviles corporativos"
+        ],
+        correctAnswer: 0,
+        explanation: "TMB ha establecido y documentado el Procedimiento para la gestión de brechas de seguridad en datos de carácter personal [7, 8]."
+      },
+      {
+        id: 30,
+        text: "En la evolución hacia la implementación de la privacidad desde las primeras etapas de desarrollo, ¿qué principio se busca aplicar al diseñar nuevos sistemas o aplicaciones según el Procediment de privacitat des del diseny i per defecte?",
+        options: [
+          "Recolectar la máxima cantidad de datos posible para futuros análisis",
+          "Posponer las consideraciones de seguridad y privacidad hasta la fase final de implementación",
+          "Aplicar las medidas técnicas y organizativas necesarias desde la fase de desarrollo (Privacidad desde el diseño)",
+          "Permitir el acceso irrestricto a los datos para facilitar el desarrollo"
+        ],
+        correctAnswer: 2,
+        explanation: "El Procediment de privacitat des del diseny i per defecte busca implementar la privacidad aplicando las medidas técnicas y organizativas necesarias y adecuadas desde la fase de desarrollo [9]."
       }
     ]
   },
@@ -1326,6 +1448,186 @@ export const tests: Test[] = [
         ],
         correctAnswer: 1,
         explanation: "Si un usuario pierde su tarjeta T-mobilitat, debe bloquearla y solicitar un reemplazo en el sistema para recuperar su saldo y abonos."
+      },
+      {
+        id: 6,
+        text: "¿Cuál es el **objetivo principal** de la Normativa de Uso del Sistema Tarifario Integrado (STI), según se deduce de su función en el sistema?",
+        options: [
+          "Reducir los costes de mantenimiento del transporte público.",
+          "Regular cómo los usuarios deben utilizar los diferentes títulos de transporte y establecer sus obligaciones y sanciones.",
+          "Promocionar el uso del vehículo privado.",
+          "Definir las rutas de las líneas de autobús y metro."
+        ],
+        correctAnswer: 1,
+        explanation: "La normativa existe para establecer las reglas del juego para los usuarios, incluyendo cómo usar los billetes, sus deberes y las consecuencias de no cumplirlos. Esto se deduce del propósito de una 'Normativa de Uso'."
+      },
+      {
+        id: 7,
+        text: "Según las fuentes, ¿a **quiénes se aplica** la Normativa de Uso del Sistema Tarifario Integrado (STI)?",
+        options: [
+          "Solo a los empleados de TMB.",
+          "Solo a los residentes de Barcelona.",
+          "A todos los usuarios del transporte público que opera bajo el STI.",
+          "Solo a los turistas."
+        ],
+        correctAnswer: 2,
+        explanation: "La normativa de uso de un sistema se aplica generalmente a todas las personas que lo utilizan, en este caso, todos los usuarios del transporte público que opera bajo el STI."
+      },
+      {
+        id: 8,
+        text: "¿En qué documento se establecen las normas y regulaciones sobre cómo deben utilizar los usuarios los diferentes títulos de transporte en TMB?",
+        options: [
+          "La Carta de Servicios de TMB.",
+          "El Reglamento de Viajeros.",
+          "La Normativa de Uso del Sistema Tarifario Integrado (STI).",
+          "El Código Ético de TMB."
+        ],
+        correctAnswer: 2,
+        explanation: "El nombre mismo del documento, 'Normativa de Uso del Sistema Tarifario Integrado (STI)', indica que contiene las reglas para el uso de los títulos dentro de este sistema."
+      },
+      {
+        id: 9,
+        text: "¿Qué aspecto busca garantizar TMB para los viajeros en cuanto al **funcionamiento y tarifa de los títulos de transporte**, según la información?",
+        options: [
+          "La gratuidad total del servicio.",
+          "Descuentos aleatorios y sorpresivos.",
+          "Tarifas diferenciadas por nacionalidad.",
+          "La transparencia, asegurando que estén informados sobre sus derechos y deberes."
+        ],
+        correctAnswer: 3,
+        explanation: "Un sistema tarifario integrado busca la transparencia para que los usuarios comprendan cómo funcionan los billetes y sus costos, así como sus derechos y deberes."
+      },
+      {
+        id: 10,
+        text: "El uso regulado de los diferentes títulos de transporte en el marco de la Normativa de Uso del STI busca asegurar un uso adecuado y respetuoso. ¿De qué busca un uso adecuado y respetuoso?",
+        options: [
+          "De las opiniones de los demás viajeros.",
+          "De los horarios de servicio.",
+          "De los recursos del sistema.",
+          "De los espacios publicitarios."
+        ],
+        correctAnswer: 2,
+        explanation: "Regular el uso de los títulos es fundamental para asegurar que los recursos (vehículos, infraestructura, etc.) del sistema de transporte se utilicen de manera eficiente y sostenible por parte de todos los usuarios."
+      },
+      {
+        id: 11,
+        text: "¿Cómo contribuye la Normativa de Uso del STI, al ser respetada por los usuarios, a hacer el sistema de transporte **más eficiente y sostenible**?",
+        options: [
+          "Reduciendo el número de vehículos en circulación.",
+          "Implementando rutas más cortas.",
+          "Asegurando que todos los usuarios respeten las normas de uso.",
+          "Limitando el acceso en horas pico."
+        ],
+        correctAnswer: 2,
+        explanation: "Cuando todos los usuarios cumplen las normas de uso (validar, usar billetes correctos, etc.), el sistema opera de manera más fluida y sin las interrupciones o pérdidas asociadas al incumplimiento, haciéndolo más eficiente y sostenible."
+      },
+      {
+        id: 12,
+        text: "La Normativa de Uso del STI establece las obligaciones y **sanciones**. ¿En qué caso principal se pueden imponer estas sanciones a un usuario?",
+        options: [
+          "Por hablar en voz alta en el transporte.",
+          "Por llevar equipaje voluminoso.",
+          "En caso de infracción a la normativa.",
+          "Por pedir información al personal."
+        ],
+        correctAnswer: 2,
+        explanation: "La imposición de sanciones es la consecuencia directa de incumplir las normas y regulaciones establecidas en la normativa, es decir, cometer una infracción."
+      },
+      {
+        id: 13,
+        text: "En caso de **infracción** de la Normativa de Uso del STI por parte de un usuario, ¿qué consecuencia general se establece, además de posibles acciones específicas?",
+        options: [
+          "Una felicitación por la originalidad.",
+          "La pérdida permanente del derecho a usar el transporte.",
+          "Una invitación a una reunión informativa.",
+          "La imposición de sanciones."
+        ],
+        correctAnswer: 3,
+        explanation: "El propósito de una normativa que establece obligaciones y sanciones es precisamente aplicar estas últimas cuando se produce una infracción."
+      },
+      {
+        id: 14,
+        text: "Según la descripción de los billetes en la información proporcionada, ¿qué tipo de billete del STI permite realizar **10 viajes unipersonales**?",
+        options: [
+          "T-usual",
+          "Billete sencillo",
+          "T-dia",
+          "T-casual"
+        ],
+        correctAnswer: 3,
+        explanation: "La descripción de la T-casual en el contexto del sistema tarifario integrado la identifica como el título con un límite de 10 viajes diseñado para una única persona."
+      },
+      {
+        id: 15,
+        text: "Basado en la descripción del billete T-casual como \"unipersonal\", ¿está permitido que este billete sea utilizado por **varios usuarios de forma simultánea** para realizar un mismo viaje (validando uno detrás de otro)?",
+        options: [
+          "Sí, siempre que sean familia.",
+          "Sí, no hay restricción.",
+          "Solo si se acaban los viajes en ese trayecto.",
+          "No, está diseñado para un solo usuario por viaje."
+        ],
+        correctAnswer: 3,
+        explanation: "El término 'unipersonal' en un billete o abono de transporte significa que solo puede ser utilizado por una única persona para cada validación de viaje, impidiendo su uso simultáneo por varias personas."
+      },
+      {
+        id: 16,
+        text: "¿Qué tipo de título de transporte, mencionado en el contexto del STI, permite viajes **ilimitados** durante **30 días consecutivos**?",
+        options: [
+          "T-casual",
+          "T-dia",
+          "T-usual",
+          "T-familiar"
+        ],
+        correctAnswer: 2,
+        explanation: "El título T-usual se describe como el abono que proporciona viajes ilimitados a lo largo de un periodo de 30 días."
+      },
+      {
+        id: 17,
+        text: "¿Cuál es uno de los objetivos principales de la **T-mobilitat** en el marco del STI, según se menciona en las fuentes?",
+        options: [
+          "Mantener el uso de billetes de papel.",
+          "Digitalizar el sistema tarifario y eliminar progresivamente los billetes de papel.",
+          "Aumentar el precio de todos los billetes.",
+          "Ofrecer transporte gratuito."
+        ],
+        correctAnswer: 1,
+        explanation: "La T-mobilitat es presentada como una plataforma tecnológica que busca la digitalización del sistema tarifario, con el fin de reemplazar los billetes físicos."
+      },
+      {
+        id: 18,
+        text: "¿A través de qué canales se puede **recargar** la tarjeta T-mobilitat, según las fuentes?",
+        options: [
+          "Únicamente en las oficinas de atención al cliente de TMB.",
+          "Solo en máquinas expendedoras de billetes.",
+          "A través de la web, app o máquinas expendedoras automáticas.",
+          "No se puede recargar, es de un solo uso."
+        ],
+        correctAnswer: 2,
+        explanation: "Las fuentes especifican que los usuarios tienen la opción de recargar su tarjeta T-mobilitat utilizando la web, la aplicación móvil o las máquinas automáticas disponibles en las estaciones."
+      },
+      {
+        id: 19,
+        text: "¿Cómo se **validan** los viajes con la T-mobilitat, según la información proporcionada?",
+        options: [
+          "Introduciendo un código PIN en los tornos de acceso.",
+          "Escaneando un código QR en la aplicación móvil.",
+          "Acercando la tarjeta o el móvil con NFC al lector de billetes.",
+          "Mostrando la tarjeta al conductor."
+        ],
+        correctAnswer: 2,
+        explanation: "La validación con la T-mobilitat se efectúa mediante tecnología de proximidad (NFC), acercando la tarjeta física o un dispositivo móvil compatible al lector en los puntos de acceso."
+      },
+      {
+        id: 20,
+        text: "¿Cuál es una de las principales funciones de la **app de T-mobilitat**?",
+        options: [
+          "Solo permite consultar horarios de autobuses.",
+          "Gestionar recargas, compra de billetes y validación de viajes con el móvil.",
+          "Permitir la comunicación directa con el personal de TMB en tiempo real.",
+          "Visualizar un mapa 3D de todas las estaciones de metro."
+        ],
+        correctAnswer: 1,
+        explanation: "La aplicación móvil asociada a la T-mobilitat facilita la gestión integral de los títulos de transporte, incluyendo la compra, recarga de saldo y la validación directa del viaje usando el teléfono."
       }
     ]
   },
@@ -1489,6 +1791,186 @@ export const tests: Test[] = [
         ],
         correctAnswer: 0,
         explanation: "Los protocolos buscan garantizar la seguridad y continuidad del servicio en diversas situaciones."
+      },
+      {
+        id: 14,
+        text: "¿Cuántos días de permiso puede solicitar un conductor por fallecimiento de un familiar directo según el convenio colectivo de TMB?",
+        options: [
+          "1 día",
+          "3 días",
+          "4 días",
+          "5 días"
+        ],
+        correctAnswer: 2,
+        explanation: "Según el convenio colectivo, se pueden solicitar 4 días de permiso por fallecimiento de un familiar directo."
+      },
+      {
+        id: 15,
+        text: "¿Cuál es la antelación mínima requerida para solicitar un permiso no remunerado en TMB según el convenio colectivo?",
+        options: [
+          "Informar al supervisor el mismo día",
+          "Solicitarlo con una antelación mínima de 15 días",
+          "Enviar una solicitud por correo electrónico sin antelación específica",
+          "No es necesario un procedimiento específico, depende del supervisor"
+        ],
+        correctAnswer: 1,
+        explanation: "El procedimiento para solicitar un permiso no remunerado requiere una antelación mínima de 15 días."
+      },
+      {
+        id: 16,
+        text: "¿Cuántos días de permiso anual por asuntos propios tiene derecho a disfrutar un empleado de TMB según el convenio colectivo?",
+        options: [
+          "1 día",
+          "3 días",
+          "6 días",
+          "7 días"
+        ],
+        correctAnswer: 2,
+        explanation: "Los empleados de TMB tienen derecho a disfrutar de 6 días de permiso anual por asuntos propios."
+      },
+      {
+        id: 17,
+        text: "¿Qué documentación debe presentar un empleado para solicitar una licencia por enfermedad según el convenio colectivo de TMB?",
+        options: [
+          "Documento de identidad",
+          "Certificado médico",
+          "Justificante de pago",
+          "Carta del supervisor"
+        ],
+        correctAnswer: 1,
+        explanation: "Para solicitar una licencia por enfermedad, el empleado debe presentar un certificado médico."
+      },
+      {
+        id: 18,
+        text: "¿Cuántos días de permiso por matrimonio o unión de hecho puede solicitar un empleado de TMB según el convenio colectivo?",
+        options: [
+          "5 días",
+          "10 días",
+          "15 días",
+          "20 días"
+        ],
+        correctAnswer: 3,
+        explanation: "El convenio colectivo de TMB otorga 20 días de permiso por matrimonio o unión de hecho."
+      },
+      {
+        id: 19,
+        text: "Según el convenio colectivo, ¿qué debe hacer un empleado si necesita ausentarse por una emergencia familiar?",
+        options: [
+          "Informar a su supervisor lo antes posible",
+          "Solicitar permiso con al menos 7 días de antelación",
+          "Llamar directamente al departamento de Recursos Humanos sin informar al supervisor",
+          "No necesita informar si es una emergencia"
+        ],
+        correctAnswer: 0,
+        explanation: "En caso de emergencia familiar, el empleado debe informar a su supervisor lo antes posible."
+      },
+      {
+        id: 20,
+        text: "¿Cuántos días de permiso se conceden por mudanza según el convenio colectivo de TMB?",
+        options: [
+          "1 día",
+          "2 días",
+          "3 días",
+          "5 días"
+        ],
+        correctAnswer: 1,
+        explanation: "Se conceden 2 días de permiso por mudanza según el convenio colectivo de TMB."
+      },
+      {
+        id: 21,
+        text: "¿Qué tipo de permiso puede solicitar un empleado para realizar estudios relacionados con su puesto de trabajo según el convenio colectivo?",
+        options: [
+          "Permiso sin sueldo",
+          "Permiso de formación retribuido",
+          "Permiso por asuntos propios",
+          "Permiso médico"
+        ],
+        correctAnswer: 1,
+        explanation: "Para realizar estudios relacionados con su puesto de trabajo, un empleado puede solicitar un permiso de formación retribuido."
+      },
+      {
+        id: 22,
+        text: "Según la normativa de TMB, ¿cuánto tiempo tardan en cancelarse las faltas leves del expediente de un empleado si no reincide?",
+        options: [
+          "10 días",
+          "12 meses",
+          "6 meses",
+          "24 meses"
+        ],
+        correctAnswer: 2,
+        explanation: "Las faltas leves se cancelan después de 6 meses si no hay reincidencia."
+      },
+      {
+        id: 23,
+        text: "¿Cuál es el período de cancelación para las faltas graves según las normativas internas de TMB?",
+        options: [
+          "6 meses",
+          "12 meses",
+          "24 meses",
+          "No se cancelan"
+        ],
+        correctAnswer: 2,
+        explanation: "Las faltas graves se cancelan después de 24 meses."
+      },
+      {
+        id: 24,
+        text: "¿Cuál es el plazo de prescripción para las faltas leves en TMB?",
+        options: [
+          "10 días",
+          "20 días",
+          "60 días",
+          "6 meses"
+        ],
+        correctAnswer: 0,
+        explanation: "Las faltas leves prescriben a los 10 días."
+      },
+      {
+        id: 25,
+        text: "¿Cuál es el plazo de prescripción para las faltas graves y muy graves en TMB?",
+        options: [
+          "10 días",
+          "20 días",
+          "60 días",
+          "12 meses"
+        ],
+        correctAnswer: 2,
+        explanation: "Las faltas graves y muy graves prescriben a los 60 días."
+      },
+      {
+        id: 26,
+        text: "Según la Memoria de Sostenibilidad 2023, ¿cuántos expedientes disciplinarios por infracciones laborales se gestionaron en TMB durante ese año?",
+        options: [
+          "12",
+          "25",
+          "34",
+          "63"
+        ],
+        correctAnswer: 2,
+        explanation: "Durante el año 2023, se gestionaron 34 expedientes disciplinarios por infracciones cometidas dentro del ámbito laboral."
+      },
+      {
+        id: 27,
+        text: "¿Qué departamento trabaja en conjunto con el Comandament d'Explotació para garantizar la seguridad de los pasajeros?",
+        options: [
+          "Mantenimiento",
+          "Recursos Humanos",
+          "Finanzas",
+          "Legal"
+        ],
+        correctAnswer: 0,
+        explanation: "El departamento de Mantenimiento trabaja en conjunto con el Comandament d'Explotació para garantizar la seguridad de los pasajeros."
+      },
+      {
+        id: 28,
+        text: "¿Con qué frecuencia se realizan las reuniones de coordinación interdepartamental en TMB para mejorar la operatividad, según la información proporcionada?",
+        options: [
+          "Semanalmente",
+          "Mensualmente",
+          "Cada tres meses",
+          "Cada seis meses"
+        ],
+        correctAnswer: 1,
+        explanation: "Las reuniones de coordinación interdepartamental en TMB para mejorar la operatividad se realizan mensualmente."
       }
     ]
   },
@@ -2311,7 +2793,8 @@ export const tests: Test[] = [
     ]
   }
 ];
-  export const infoGeneral = [
+
+export const infoGeneral = [
     {
       id: "Info_1",
       title: "Nomenclatura de Líneas y Otros Términos Relevantes",
@@ -2325,7 +2808,7 @@ export const tests: Test[] = [
 
 ## Iniciales y Abreviaturas Importantes:
 
-* **TMB:** Transports Metropolitans de Barcelona
+* **TMB:** Transports Metropolitans de Barcelona, denominación que engloba a las siguientes empresas: Ferrocarril Metropolità de Barcelona S.A., Transports de Barcelona S.A., Projectes i Serveis de Mobilitat S.A., Transports Metropolitans de Barcelona S.L., y la Fundació TMB.
 * **ATM:** Autoritat del Transport Metropolità
 * **AMB:** Àrea Metropolitana de Barcelona
 * **FMB:** Ferrocarril Metropolità de Barcelona
@@ -2343,6 +2826,18 @@ export const tests: Test[] = [
 * **CCB:** Centro control de bus
 * **REMT:** Registre d'Explotació i Manteniment de Transports
 * **UT:** Unitat de Tracció (Unidad de Tracción en el metro)
+* **SI:** Sistemas de Información. Programas empleados en el tratamiento de la información corporativa y software propio de los Sistemas Operacionales como parte de las actividades de negocio de la Compañía. También incluirá los sistemas operativos que dan soporte a los citados programas. Deben estar claramente identificados e inventariados. Los requisitos relacionados con la seguridad de la información se incluirán en los requisitos para los nuevos sistemas de información o mejoras a los sistemas existentes.
+* **SO:** Sistemas Operacionales. Sistemas relacionados con los elementos operacionales de la Compañía. Deben estar claramente identificados e inventariados.
+* **RGPD:** Reglamento General de Protección de Datos (Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016). Es una base legitimadora del tratamiento de datos personales.
+* **ENS:** Esquema Nacional de Seguridad. Es una normativa relacionada aplicable a TMB.
+* **AR:** Análisis de Riesgos. Documento o procedimiento relacionado con la seguridad. Un análisis de riesgos debe realizarse para identificar los riesgos para los derechos y libertades de las personas derivados del tratamiento de datos.
+* **AIPD:** Evaluación de Impacto en la Protección de Datos. Se debe realizar antes de un tratamiento de datos cuando es probable que implique un alto riesgo para los derechos y libertades de las personas, basado en el resultado del análisis de riesgos.
+* **DPD:** Delegado de Protección de Datos. Figura responsable de asesorar sobre cuestiones relacionadas con el tratamiento de datos personales y la privacidad.
+* **CST:** Centre de Suport Tecnològic. Portal de intranet donde se encuentran los criterios de priorización para la consulta de todos los trabajadores TMB.
+* **DACI:** Declaración de Ausencia de Conflicto de Intereses. Documento que deben suscribir las personas implicadas en ciertos proyectos, con independencia de su nivel de participación o posición jerárquica.
+* **SLA:** ACUERDO DE NIVELES DE SERVICIO. Un acuerdo, preferiblemente documentado, entre un proveedor de servicios y el cliente(s)/usuario(s) que define los objetivos mínimos de rendimiento para un servicio y cómo se cuantificarán.
+* **OID:** Identificador de Objeto. A ASN.1, se debe incluir obligatoriamente en la firma electrónica para identificar la política marco y la versión.
+* **DCCF:** Dispositivo Calificado de Creación de Signatura. Elemento que sirve para aplicar los datos de creación de Firma, que cumple con los requisitos establecidos en el Reglamento (UE) No 910/2014.
 
 ## Sistemas y Aplicaciones:
 

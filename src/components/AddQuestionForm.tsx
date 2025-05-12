@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
-import { useStore } from '../store'; // Importa el store
+import { useStore } from '../store';
+import { infoGeneral } from '../data/tests';
 
 export const AddQuestionForm: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
-  const [testId, setTestId] = useState<number>(1);
+  const [selectedTestId, setSelectedTestId] = useState<string | number>('');
   const [question, setQuestion] = useState({
     text: '',
     options: ['', '', '', ''],
@@ -12,7 +13,9 @@ export const AddQuestionForm: React.FC = () => {
     explanation: ''
   });
 
-  const addQuestion = useStore((state) => state.addQuestion); // Trae la función addQuestion del store
+  const addQuestion = useStore((state) => state.addQuestion);
+  const tests = useStore((state) => state.tests);
+  const allTests = [...tests, ...infoGeneral];
 
   const handleOptionChange = (index: number, value: string) => {
     const newOptions = [...question.options];
@@ -23,16 +26,21 @@ export const AddQuestionForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Agregar la nueva pregunta usando la función del store
-    addQuestion(testId, question);
-    
-    // Resetear el formulario
+    if (!selectedTestId) {
+      alert('Por favor selecciona un tema.');
+      return;
+    }
+
+    addQuestion(selectedTestId, question);
+
     setQuestion({
       text: '',
       options: ['', '', '', ''],
       correctAnswer: 0,
       explanation: ''
     });
+
+    setSelectedTestId('');
     setShowForm(false);
   };
 
@@ -49,19 +57,23 @@ export const AddQuestionForm: React.FC = () => {
       ) : (
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
           <h3 className="text-xl font-semibold mb-4">Añadir Nueva Pregunta</h3>
-          
+
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Seleccionar Tema
             </label>
             <select
-              value={testId}
-              onChange={(e) => setTestId(Number(e.target.value))}
+              value={selectedTestId}
+              onChange={(e) => setSelectedTestId(e.target.value)}
               className="w-full p-2 border rounded-md"
+              required
             >
-              {/* Aquí van los tests disponibles */}
-              <option value={1}>Historia y Evolución de TMB</option>
-              {/* Aquí puedes agregar más temas */}
+              <option value="">Seleccionar Tema</option>
+              {allTests.map((test) => (
+                <option key={test.id} value={test.id}>
+                  {test.title}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -83,24 +95,21 @@ export const AddQuestionForm: React.FC = () => {
               Opciones
             </label>
             {question.options.map((option, index) => (
-              <div key={index} className="mb-2">
-                <div className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="correctAnswer"
-                    checked={question.correctAnswer === index}
-                    onChange={() => setQuestion({ ...question, correctAnswer: index })}
-                    className="mr-2"
-                  />
-                  <input
-                    type="text"
-                    value={option}
-                    onChange={(e) => handleOptionChange(index, e.target.value)}
-                    className="w-full p-2 border rounded-md"
-                    placeholder={`Opción ${index + 1}`}
-                    required
-                  />
-                </div>
+              <div key={index} className="mb-2 flex items-center">
+                <input
+                  type="radio"
+                  name="correctAnswer"
+                  checked={question.correctAnswer === index}
+                  onChange={() => setQuestion({ ...question, correctAnswer: index })}
+                  className="mr-2"
+                />
+                <input
+                  type="text"
+                  value={option}
+                  onChange={(e) => handleOptionChange(index, e.target.value)}
+                  className="w-full p-2 border rounded-md"
+                  required
+                />
               </div>
             ))}
           </div>
@@ -138,3 +147,5 @@ export const AddQuestionForm: React.FC = () => {
     </div>
   );
 };
+
+export default AddQuestionForm;
