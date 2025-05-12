@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnóstico de Tests - CCOO TMB</title>
+    <title>Diagnóstico de Tests - CCOO TMB (Netlify)</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <style>
@@ -71,14 +71,27 @@
         th {
             background-color: #f2f2f2;
         }
+        .netlify-info {
+            background-color: #f0f8ff;
+            border-left: 4px solid #1e90ff;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
-    <h1>Diagnóstico de Tests - CCOO TMB</h1>
+    <h1>Diagnóstico de Tests - CCOO TMB (Netlify)</h1>
+    
+    <div class="netlify-info">
+        <h3>Información de Netlify</h3>
+        <p>Esta página está diseñada específicamente para diagnosticar problemas en el despliegue de Netlify.</p>
+        <p>URL de la aplicación: <a href="https://tmb-prep-curso.netlify.app/" target="_blank">https://tmb-prep-curso.netlify.app/</a></p>
+        <div id="netlify-status"></div>
+    </div>
     
     <div class="card">
         <h2>Instrucciones</h2>
-        <p>Esta página te ayudará a diagnosticar problemas con la visualización de tests. Sigue estos pasos:</p>
+        <p>Esta página te ayudará a diagnosticar problemas con la visualización de tests en Netlify. Sigue estos pasos:</p>
         <ol>
             <li>Inicia sesión con tu cuenta (o de forma anónima)</li>
             <li>Verifica que los tests se carguen correctamente</li>
@@ -117,15 +130,41 @@
     </div>
     
     <div class="card">
-        <h2>Datos de Tests</h2>
-        <div id="tests-data">
-            <p>Haz clic en el botón para cargar los datos de tests:</p>
-            <button id="load-tests">Cargar datos de tests</button>
-            <div id="tests-list"></div>
+        <h2>Verificación de URL</h2>
+        <div id="url-check">
+            <p>Vamos a verificar si hay problemas con las URLs:</p>
+            <button id="check-url">Verificar URLs</button>
+            <div id="url-result"></div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>Solución Rápida</h2>
+        <div>
+            <p>Si estás viendo el mensaje "test no encontrado", prueba estas soluciones:</p>
+            <ol>
+                <li>
+                    <button id="clear-storage">Limpiar almacenamiento local</button>
+                    <span id="clear-result"></span>
+                </li>
+                <li>
+                    <button id="go-home">Ir a la página principal</button>
+                </li>
+                <li>
+                    <button id="reload-page">Recargar la página</button>
+                </li>
+            </ol>
         </div>
     </div>
 
     <script>
+        // Verificar si estamos en Netlify
+        const isNetlify = window.location.href.includes("netlify.app");
+        document.getElementById('netlify-status').innerHTML = `
+            <p>Estado actual: <span class="${isNetlify ? 'success' : 'warning'}">${isNetlify ? '✅ Ejecutando en Netlify' : '⚠️ No estás en Netlify'}</span></p>
+            <p>URL actual: ${window.location.href}</p>
+        `;
+        
         // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDz84UMxLbHpMfl6aiiEraezX72n_DU97o",
@@ -248,6 +287,10 @@
                                 <td>Info General disponible</td>
                                 <td>${infoAvailable ? '<span class="success">✅ ' + mockInfoGeneral.length + ' items</span>' : '<span class="error">❌ No hay info</span>'}</td>
                             </tr>
+                            <tr>
+                                <td>Entorno Netlify</td>
+                                <td>${isNetlify ? '<span class="success">✅ Correcto</span>' : '<span class="warning">⚠️ No estás en Netlify</span>'}</td>
+                            </tr>
                         </table>
                         
                         <h3>Diagnóstico:</h3>
@@ -266,55 +309,76 @@
                 }, 1000);
             });
             
-            // Cargar datos de tests
-            document.getElementById('load-tests').addEventListener('click', function() {
-                const testsListDiv = document.getElementById('tests-list');
-                testsListDiv.innerHTML = '<p>Cargando datos de tests...</p>';
+            // Verificar URLs
+            document.getElementById('check-url').addEventListener('click', function() {
+                const urlResultDiv = document.getElementById('url-result');
+                urlResultDiv.innerHTML = '<p>Verificando URLs...</p>';
                 
-                // Simular carga de tests
                 setTimeout(() => {
-                    const mockTests = [
-                        { id: 1, title: "Historia y Evolución de TMB", questions: [/* ... */] },
-                        { id: 2, title: "Estructura Organizativa de TMB", questions: [/* ... */] },
-                        { id: 3, title: "Valores y Código Ético de TMB", questions: [/* ... */] },
-                        { id: 4, title: "Plan Estratégico 2025", questions: [/* ... */] }
-                    ];
+                    const currentUrl = window.location.href;
+                    const hasTestId = window.location.search.includes('testId');
+                    const testId = new URLSearchParams(window.location.search).get('testId');
                     
-                    const mockInfoGeneral = [
-                        { id: "info1", title: "Información General 1", content: "..." },
-                        { id: "info2", title: "Información General 2", content: "..." }
-                    ];
-                    
-                    testsListDiv.innerHTML = `
-                        <h3>Tests disponibles:</h3>
+                    urlResultDiv.innerHTML = `
+                        <h3>Análisis de URL:</h3>
                         <table>
                             <tr>
-                                <th>ID</th>
-                                <th>Título</th>
+                                <th>Verificación</th>
+                                <th>Resultado</th>
                             </tr>
-                            ${mockTests.map(test => `
-                                <tr>
-                                    <td>${test.id}</td>
-                                    <td>${test.title}</td>
-                                </tr>
-                            `).join('')}
+                            <tr>
+                                <td>URL actual</td>
+                                <td>${currentUrl}</td>
+                            </tr>
+                            <tr>
+                                <td>¿Contiene testId?</td>
+                                <td>${hasTestId ? '<span class="success">✅ Sí</span>' : '<span class="warning">⚠️ No</span>'}</td>
+                            </tr>
+                            ${hasTestId ? `
+                            <tr>
+                                <td>Valor de testId</td>
+                                <td>${testId}</td>
+                            </tr>
+                            ` : ''}
+                            <tr>
+                                <td>¿Es URL de Netlify?</td>
+                                <td>${isNetlify ? '<span class="success">✅ Sí</span>' : '<span class="warning">⚠️ No</span>'}</td>
+                            </tr>
                         </table>
                         
-                        <h3>Información General:</h3>
-                        <table>
-                            <tr>
-                                <th>ID</th>
-                                <th>Título</th>
-                            </tr>
-                            ${mockInfoGeneral.map(info => `
-                                <tr>
-                                    <td>${info.id}</td>
-                                    <td>${info.title}</td>
-                                </tr>
-                            `).join('')}
-                        </table>
+                        <h3>Diagnóstico:</h3>
+                        ${hasTestId 
+                            ? `<p>Estás intentando ver el test con ID: ${testId}. Si ves "test no encontrado", es posible que este ID no exista o no se haya cargado correctamente.</p>` 
+                            : `<p>No estás intentando ver ningún test específico. Deberías ver la lista de tests disponibles.</p>`}
+                        
+                        <h3>Recomendaciones:</h3>
+                        <ul>
+                            ${hasTestId ? '<li>Intenta volver a la lista de tests y seleccionar uno diferente</li>' : ''}
+                            <li>Limpia el almacenamiento local del navegador</li>
+                            <li>Intenta acceder directamente a la URL principal: <a href="https://tmb-prep-curso.netlify.app/">https://tmb-prep-curso.netlify.app/</a></li>
+                        </ul>
                     `;
                 }, 1000);
+            });
+            
+            // Limpiar almacenamiento local
+            document.getElementById('clear-storage').addEventListener('click', function() {
+                try {
+                    localStorage.clear();
+                    document.getElementById('clear-result').innerHTML = '<span class="success"> ✅ Almacenamiento local limpiado correctamente</span>';
+                } catch (error) {
+                    document.getElementById('clear-result').innerHTML = `<span class="error"> ❌ Error: ${error.message}</span>`;
+                }
+            });
+            
+            // Ir a la página principal
+            document.getElementById('go-home').addEventListener('click', function() {
+                window.location.href = 'https://tmb-prep-curso.netlify.app/';
+            });
+            
+            // Recargar la página
+            document.getElementById('reload-page').addEventListener('click', function() {
+                window.location.reload();
             });
             
         } catch (error) {

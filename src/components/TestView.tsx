@@ -47,9 +47,64 @@ export const TestView: React.FC = () => {
     }, [currentTest]);
 
     if (!currentTest) {
+        // Obtener información de diagnóstico
+        const testId = new URLSearchParams(window.location.search).get('testId');
+        const testsCount = tests.length;
+        const infoGeneralCount = infoGeneral.length;
+        const allTestsCount = testsCount + infoGeneralCount;
+        
+        // Verificar si hay algún test con ID similar (por si es un problema de tipo de dato)
+        const similarTests = [...tests, ...infoGeneral].filter(t =>
+            String(t.id) === testId ||
+            Number(t.id) === Number(testId) ||
+            t.id === testId
+        );
+        
         return (
             <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
-                <p>Test no encontrado. Por favor, selecciona un test de la lista.</p>
+                <div className="mb-4 p-3 bg-red-100 rounded-md">
+                    <p className="font-semibold text-red-700">Test no encontrado. Por favor, selecciona un test de la lista.</p>
+                </div>
+                
+                <div className="p-3 bg-gray-100 rounded-md mb-4">
+                    <h3 className="font-semibold mb-2">Información de diagnóstico:</h3>
+                    <p>ID de test solicitado: {testId || 'ninguno'}</p>
+                    <p>Tests disponibles: {allTestsCount} (Tests: {testsCount}, Info: {infoGeneralCount})</p>
+                    
+                    {similarTests.length > 0 && (
+                        <div className="mt-2">
+                            <p className="font-medium text-orange-700">Se encontraron tests con ID similar:</p>
+                            <ul className="list-disc pl-5 mt-1">
+                                {similarTests.map(test => (
+                                    <li key={test.id}>ID: {test.id} ({typeof test.id}) - {test.title}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
+                
+                <div className="flex flex-col space-y-2">
+                    <button
+                        onClick={() => {
+                            window.history.replaceState({}, document.title, '/');
+                            setCurrentTest(null);
+                        }}
+                        className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                    >
+                        Volver a la lista de tests
+                    </button>
+                    
+                    <button
+                        onClick={() => {
+                            // Limpiar localStorage y recargar
+                            localStorage.clear();
+                            window.location.href = '/';
+                        }}
+                        className="px-4 py-2 bg-yellow-500 text-white rounded-md"
+                    >
+                        Solución rápida: Limpiar datos y volver al inicio
+                    </button>
+                </div>
             </div>
         );
     }

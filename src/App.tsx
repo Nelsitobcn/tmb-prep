@@ -8,18 +8,22 @@ import { TestList } from './components/TestList';
 import { TestView } from './components/TestView';
 import { AddQuestionForm } from './components/AddQuestionForm'; // Asumo que este lo usas cuando estás logueado
 import { useStore } from './store';
-import { Train } from 'lucide-react';
+import { Train, AlertTriangle } from 'lucide-react';
+import { DiagnosticComponent } from './DiagnosticComponent';
 
 // Importación del formulario de Registro
 import { RegisterForm } from './components/RegisterForm';
 // Importaremos LoginForm más adelante cuando lo necesitemos
 // import { LoginForm } from './components/LoginForm';
+import { AlertCircle } from 'lucide-react';
 
 function App() {
   const { currentTestId } = useStore();
 
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
+  const [showDiagnostic, setShowDiagnostic] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   // Podríamos añadir un estado para cambiar entre vista de Login y Registro
   // const [showLoginView, setShowLoginView] = useState(true); // true para Login, false para Registro
@@ -31,6 +35,16 @@ function App() {
     });
     return () => unsubscribe();
   }, []);
+  
+  // Verificar si hay un testId en la URL pero no se encuentra el test
+  useEffect(() => {
+    const testId = new URLSearchParams(window.location.search).get('testId');
+    if (testId && !currentTestId) {
+      setHasError(true);
+    } else {
+      setHasError(false);
+    }
+  }, [currentTestId]);
 
   if (loadingAuth) {
     return (
@@ -82,6 +96,32 @@ function App() {
             */}
           </div>
           
+          {/* Botón de diagnóstico y alerta de error */}
+          <div className="mb-4 flex justify-between items-center">
+            {hasError && (
+              <div className="flex items-center text-red-600">
+                <AlertCircle className="w-5 h-5 mr-2" />
+                <span className="text-sm font-medium">Se ha detectado un problema. Usa el diagnóstico para resolverlo.</span>
+              </div>
+            )}
+            <button
+              onClick={() => setShowDiagnostic(!showDiagnostic)}
+              className={`flex items-center text-sm ${hasError
+                ? "bg-red-100 hover:bg-red-200 text-red-800"
+                : "bg-yellow-100 hover:bg-yellow-200 text-yellow-800"} py-1 px-3 rounded ml-auto`}
+            >
+              <AlertTriangle className="w-4 h-4 mr-1" />
+              {showDiagnostic ? "Ocultar diagnóstico" : "Mostrar diagnóstico"}
+            </button>
+          </div>
+
+          {/* Componente de diagnóstico */}
+          {showDiagnostic && (
+            <div className="mb-6">
+              <DiagnosticComponent />
+            </div>
+          )}
+          
           {/* Lógica para mostrar contenido principal */}
           {currentTestId ? (
             <TestView />
@@ -98,7 +138,7 @@ function App() {
               </div>
               {/* Asumo que AddQuestionForm es para usuarios logueados */}
               {/* <AddQuestionForm />  Si este es el caso, quizás deba ir aquí o en otra vista */}
-              <TestList /> 
+              <TestList />
             </>
           )}
         </main>
